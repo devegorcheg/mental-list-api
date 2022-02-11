@@ -15,6 +15,7 @@ module.exports = {
         "test",
         "revert",
         "WIP",
+        "perf",
       ],
     ],
   },
