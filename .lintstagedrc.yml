@@ -1,0 +1,2 @@
+"src/**/*.{ts,tsx,js,jsx}":
+  - npx prettier --config .prettierrc --write
