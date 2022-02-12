@@ -15,7 +15,7 @@ module.exports = {
   maxMessageLength: 100,
   minMessageLength: 3,
   questions: ["type", "scope", "subject", "body"],
-  scopes: ["common", "user", "tools"],
+  scopes: ["app", "common", "user", "tools"],
   types: {
     feat: {
       description: "",

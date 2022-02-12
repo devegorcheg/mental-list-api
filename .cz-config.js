@@ -13,7 +13,12 @@ module.exports = {
     { value: "WIP", name: "WIP: Work in progress" },
   ],
 
-  scopes: [{ name: "user" }, { name: "board" }, { name: "card" }],
+  scopes: [
+    { name: "app" },
+    { name: "common" },
+    { name: "user" },
+    { name: "tools" },
+  ],
 
   allowTicketNumber: false,
   isTicketNumberRequired: false,
