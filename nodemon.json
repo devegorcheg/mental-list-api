@@ -1,8 +1,0 @@
-{
-  "ext": "js,json, ts",
-  "exec": "node -r ./ts_compiler.js ./src/index.ts",
-  "watch": ["./src/**/*"],
-  "env": {
-    "TS_NODE_TRANSPILE_ONLY": true
-  }
-}
