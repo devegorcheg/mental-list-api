@@ -6,9 +6,7 @@
   "scripts": {
     "migrate-create": "migrate --template-file ./src/lib/migrations/migrateTemplateFile.ts create",
     "migrate": "TS_NODE_TRANSPILE_ONLY=false node -r ./ts_compiler.js ./src/lib/migrations/index.ts",
-    "dev": "npm run migrate && nodemon",
-    "serve": "npm run migrate && node -r tsconfig-paths/register build",
-    "build": "webpack --mode production",
+    "dev": "npm run migrate && vite",
     "type-check": "tsc"
   },
   "config": {
@@ -46,30 +44,18 @@
     "express": "^4.17.2",
     "migrate": "^1.7.0",
     "mongoose": "^6.2.1",
-    "multer": "^1.4.4",
-    "nodemailer": "^6.7.2",
     "pino": "^6.13.4",
     "pino-multi-stream": "^6.0.0",
     "pino-pretty": "^7.5.1",
-    "regenerator-runtime": "^0.13.9",
     "typescript": "^4.5.5"
   },
   "devDependencies": {
-    "@babel/core": "^7.9.6",
-    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.8.3",
-    "@babel/plugin-proposal-object-rest-spread": "^7.9.6",
-    "@babel/plugin-proposal-optional-chaining": "^7.9.0",
-    "@babel/preset-env": "^7.9.6",
-    "@babel/preset-typescript": "^7.9.0",
     "@commitlint/cli": "^16.1.0",
     "@commitlint/config-conventional": "^16.0.0",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
-    "@types/mongoose": "^5.11.97",
-    "@types/multer": "^1.4.7",
     "@types/nodemailer": "^6.4.0",
     "babel-loader": "^8.1.0",
-    "clean-webpack-plugin": "^3.0.0",
     "cz-customizable": "^6.2.0",
     "git-cz": "^4.8.0",
     "husky": "^4.2.5",
@@ -78,9 +64,8 @@
     "standard-version": "^8.0.0",
     "ts-node": "^8.10.1",
     "tsconfig-paths": "^3.9.0",
-    "tsconfig-paths-webpack-plugin": "^3.2.0",
-    "webpack": "^5.68.0",
-    "webpack-cli": "^4.9.2",
-    "webpack-node-externals": "^3.0.0"
+    "vite": "^2.8.1",
+    "vite-plugin-node": "^0.0.17",
+    "vite-tsconfig-paths": "^3.4.0"
   }
 }
