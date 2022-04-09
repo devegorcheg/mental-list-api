@@ -1,5 +1,8 @@
 import { Schema, model, Document } from "mongoose";
 
+// utils
+import { _id, createdAt, updatedAt } from "lib/schema";
+
 interface UserDoc extends Document {
   profile: {
     firstName: string;
@@ -26,6 +29,9 @@ const profileSchema = new Schema(
 
 const userSchema = new Schema(
   {
+    _id,
+    createdAt,
+    updatedAt,
     profile: {
       type: profileSchema,
       required: true,
