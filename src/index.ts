@@ -5,6 +5,7 @@ import { userLoader } from "@accounts/rest-express";
 
 // api
 import { userRoutes } from "feat/user";
+import { prioritiesRoutes } from "feat/priorities";
 
 // utils
 import { setupAccounts, getAccountsServer } from "lib/accounts";
@@ -35,6 +36,8 @@ const start = async () => {
     app.use(userLoader(getAccountsServer()));
 
     app.use("/api/user", userRoutes);
+
+    app.use("/api/priorities", prioritiesRoutes);
 
     app.get("/api/healthcheck", (_, res) => {
       return res.status(200).send("healthy");

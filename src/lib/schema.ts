@@ -9,8 +9,3 @@ export const updatedAt = {
   required: true,
   default: () => new Date(),
 };
-
-export const _id = {
-  type: String,
-  required: true,
-};

@@ -1,18 +1,14 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, ObjectId } from "mongoose";
 
-// utils
-import { _id } from "lib/schema";
-
-interface PriorityDoc extends Document {
-  _id: string;
+interface PriorityDb {
+  _id: ObjectId;
   title: string;
   color: string;
   priority: number;
-  owner: string;
+  owner: ObjectId;
 }
 
 const prioritySchema = new Schema({
-  _id,
   title: {
     type: String,
     required: true,
@@ -20,7 +16,6 @@ const prioritySchema = new Schema({
   color: {
     type: String,
     required: true,
-    // TODO: set default color
   },
   priority: {
     type: Number,
@@ -28,9 +23,9 @@ const prioritySchema = new Schema({
     default: 0,
   },
   owner: {
-    type: String,
+    type: Schema.Types.ObjectId,
     required: true,
   },
 });
 
-export const Priorities = model<PriorityDoc>("Priorities", prioritySchema);
+export const Priorities = model<PriorityDb>("Priorities", prioritySchema);

@@ -15,3 +15,5 @@ export const db = {
   User,
   Priorities,
 };
+
+export type Db = typeof db;
