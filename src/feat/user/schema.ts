@@ -1,9 +1,12 @@
-import { Schema, model, Document } from "mongoose";
+import { Schema, model, Document, ObjectId } from "mongoose";
 
 // utils
-import { _id, createdAt, updatedAt } from "lib/schema";
+import { createdAt, updatedAt } from "lib/schema";
 
-interface UserDoc extends Document {
+export interface UserDb {
+  _id: ObjectId;
+  createdAt: string;
+  updatedAt: string;
   profile: {
     firstName: string;
     lastName: string;
@@ -29,7 +32,6 @@ const profileSchema = new Schema(
 
 const userSchema = new Schema(
   {
-    _id,
     createdAt,
     updatedAt,
     profile: {
@@ -41,4 +43,4 @@ const userSchema = new Schema(
   { strict: false },
 );
 
-export const User = model<UserDoc>("User", userSchema);
+export const User = model<UserDb>("User", userSchema);
