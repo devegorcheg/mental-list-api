@@ -17,6 +17,7 @@ module.exports = {
     { name: "app" },
     { name: "common" },
     { name: "user" },
+    { name: "tasks" },
     { name: "tools" },
   ],
 
