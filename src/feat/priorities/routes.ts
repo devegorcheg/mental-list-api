@@ -70,6 +70,7 @@ router.post("/", async (req: Request & { user?: UserDb }, res) => {
   try {
     await db.Priorities.create({
       ...priority,
+      owner: userId,
     });
 
     const priorities = await db.Priorities.find({
