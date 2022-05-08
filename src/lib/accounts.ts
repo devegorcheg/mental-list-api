@@ -3,7 +3,9 @@ import { Mongo } from "@accounts/mongo";
 import accountsExpress from "@accounts/rest-express";
 import AccountsPassword from "@accounts/password";
 
-import { User } from "feat/user/schema";
+// utils
+import { db } from "./db";
+import { defaultPriorities } from "feat/priorities/utils";
 
 let accountsServer: AccountsServer;
 
@@ -24,12 +26,18 @@ export const setupAccounts = ({ app, mongoose }: any) => {
     { password },
   );
 
+  // full list of hooks:
+  // https://github.com/accounts-js/accounts/blob/master/packages/server/src/utils/server-hooks.ts
   accountsServer.on("CreateUserSuccess", async ({ _id }) => {
-    await User.findByIdAndUpdate(_id, {
+    await db.User.findByIdAndUpdate(_id, {
       $set: {
         "emails.0.verified": true,
       },
     }).exec();
+
+    await db.Priorities.insertMany(
+      defaultPriorities.map(priority => ({ ...priority, owner: _id })),
+    );
   });
 
   app.use(accountsExpress(accountsServer, { path: "/api" }));
