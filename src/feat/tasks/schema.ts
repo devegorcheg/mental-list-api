@@ -17,7 +17,7 @@ const taskSchema = new Schema({
   },
   description: {
     type: String,
-    required: true,
+    default: "",
   },
   priority: {
     type: Schema.Types.ObjectId,
@@ -33,7 +33,7 @@ const taskSchema = new Schema({
   },
   done: {
     type: Boolean,
-    required: true,
+    default: false,
   },
 });
 
