@@ -19,6 +19,7 @@
 ```
 MONGO_URL=mongodb://localhost:27017/study
 PORT=3001
+NODE_ENV=development
 ```
 
 Запуск:
