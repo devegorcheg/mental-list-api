@@ -68,19 +68,12 @@ router.post("/", async (req: Request & { user?: UserDb }, res) => {
   const userId = req?.user?._id ?? "";
 
   try {
-    await db.Priorities.create({
+    const newPriority = await db.Priorities.create({
       ...priority,
       owner: userId,
     });
 
-    const priorities = await db.Priorities.find({
-      owner: userId,
-    })
-      .sort({ priority: -1, _id: -1 })
-      .lean()
-      .exec();
-
-    return res.status(200).json(priorities);
+    return res.status(200).json(newPriority);
   } catch (error) {
     return res.status(400).json({
       message: "BAD_REQUEST",
