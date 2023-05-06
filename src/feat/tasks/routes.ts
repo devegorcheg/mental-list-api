@@ -1,4 +1,5 @@
 import { Router } from "express";
+import { Types } from "mongoose";
 
 // utils
 import { db } from "lib/db";
@@ -16,15 +17,45 @@ router.get("/", async (req: Request & { user?: UserDb }, res) => {
     return;
   }
 
+  const { sort, filter } = req.query;
   const userId = req?.user?._id ?? "";
+  const $match: Record<string, unknown> = { owner: userId };
+
+  if (filter) {
+    $match.priority = new Types.ObjectId(filter as string);
+  }
 
   try {
-    const tasks = await db.Tasks.find({
-      owner: userId,
-    })
-      .sort({ dueDate: -1, _id: -1 })
-      .lean()
-      .exec();
+    const tasks = await db.Tasks.aggregate([
+      { $match },
+      {
+        $lookup: {
+          from: "priorities",
+          localField: "priority",
+          foreignField: "_id",
+          as: "priorityDoc",
+        },
+      },
+      { $unwind: "$priorityDoc" },
+      {
+        $sort: {
+          dueDate: 1,
+          "priorityDoc.priority": sort === "asc" ? 1 : 1,
+          _id: -1,
+        },
+      },
+      {
+        $project: {
+          title: 1,
+          description: 1,
+          priority: 1,
+          owner: 1,
+          dueDate: 1,
+          done: 1,
+        },
+      },
+    ]);
+
     return res.status(200).json(tasks);
   } catch {
     return res.status(400).json({
@@ -43,19 +74,12 @@ router.post("/", async (req: Request & { user?: UserDb }, res) => {
   const userId = req?.user?._id ?? "";
 
   try {
-    await db.Tasks.create({
+    const newTask = await db.Tasks.create({
       ...task,
       owner: userId,
     });
 
-    const tasks = await db.Tasks.find({
-      owner: userId,
-    })
-      .sort({ dueDate: -1, _id: -1 })
-      .lean()
-      .exec();
-
-    return res.status(200).json(tasks);
+    return res.status(200).json(newTask);
   } catch (error) {
     return res.status(400).json({
       message: "BAD_REQUEST",
