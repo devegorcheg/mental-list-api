@@ -20,6 +20,7 @@ router.get("/", async (req: Request & { user?: UserDb }, res) => {
   const { sort, filter } = req.query;
   const userId = req?.user?._id ?? "";
   const $match: Record<string, unknown> = { owner: userId };
+  const sortParam = sort === "asc" ? -1 : 1;
 
   if (filter) {
     $match.priority = new Types.ObjectId(filter as string);
@@ -38,9 +39,27 @@ router.get("/", async (req: Request & { user?: UserDb }, res) => {
       },
       { $unwind: "$priorityDoc" },
       {
-        $sort: {
+        $project: {
+          title: 1,
+          description: 1,
+          priority: 1,
+          priorityDoc: 1,
+          owner: 1,
           dueDate: 1,
-          "priorityDoc.priority": sort === "asc" ? 1 : 1,
+          done: 1,
+          date: {
+            $dateToParts: { date: "$dueDate" },
+          },
+        },
+      },
+      {
+        $sort: {
+          "date.year": 1,
+          "date.month": 1,
+          "date.day": 1,
+          "priorityDoc.priority": sortParam,
+          "date.hour": 1,
+          "date.minute": 1,
           _id: -1,
         },
       },
